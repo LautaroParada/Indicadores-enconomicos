@@ -33,6 +33,18 @@ classdef Indicadores
                 'ArrayFormat', 'json');
         end
         
+        % ----------------------------------------
+        % Indicadores económicos diarios
+        % ----------------------------------------
+        
+        function meta_ = metadata(~)
+            url = 'https://mindicador.cl/';
+            code = webread(url);
+            tree = htmlTree(code);
+            selector = 'tr';
+            meta_ = extractHTMLText(findElement(tree, selector));
+        end
+        
         function indicador = get_data(self, params)
             arguments
                 self

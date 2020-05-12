@@ -96,18 +96,20 @@ classdef Indicadores
                     request.version, request.autor, string(datetime('now')));
                 
                 % creando las variables de respuesta
-                rows = numel(request.serie); % variable que contiene la data
-                res = cell(1, rows);
                 names_ = self.endpoint_vars(ind);
                 
-                for i = 1:rows
-                    res{i} = self.selectfields(request.serie, names_, false);
-                end
+                % filtrar por solo las columnas con datos 
+                res = self.selectfields(request.serie, names_, false);
+                res = cell2table(res);
                 
-                res = cell2table(vertcat(res{:}));
                 % propiedades de la tabla 
                 res.Properties.VariableNames = names_;
                 res.Properties.Description = descr;
+                
+                % transformando la fecha de la API a formato legible
+                res.fecha = cellfun(@(d) datetime(d(1:10), ...
+                    'InputFormat', 'yyyy-MM-dd', 'Format', 'yyyy-MM-dd'),...
+                    res.fecha);
                 
             % caso de solicitud de algun indicador CON fecha
             elseif ~strcmp(ind, '') && ~strcmp(fecha, '')
@@ -116,18 +118,19 @@ classdef Indicadores
                     request.version, request.autor, string(datetime('now')));
                 
                 % creando las variables de respuesta
-                rows = numel(request.serie); % variable que contiene la data
-                res = cell(1, rows);
                 names_ = self.endpoint_vars(ind);
+                                
+                res = self.selectfields(request.serie, names_, false);
+                res = cell2table(res);
                 
-                for i = 1:rows
-                    res{i} = self.selectfields(request.serie, names_, false);
-                end
-                
-                res = cell2table(vertcat(res{:}));
                 % propiedades de la tabla 
                 res.Properties.VariableNames = names_;
                 res.Properties.Description = descr;
+                
+                % transformando la fecha de la API a formato legible
+                res.fecha = cellfun(@(d) datetime(d(1:10), ...
+                    'InputFormat', 'yyyy-MM-dd', 'Format', 'yyyy-MM-dd'),...
+                    res.fecha);
             end
         end
         

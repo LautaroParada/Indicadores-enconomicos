@@ -21,4 +21,13 @@ La documentación del cliente en Matlab puede ser encontrada en el siguiente sit
          <file>html/Example.html</file>
       </demoitem>
    </demosection>
+   <demosection>
+      <label>html</label>
+      <demoitem>
+         <label>Example</label>
+         <type>other</type>
+         <source>Example</source>
+         <file>html/html/Example.html</file>
+      </demoitem>
+   </demosection>
 </demos>

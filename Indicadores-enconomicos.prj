@@ -1,5 +1,5 @@
 <deployment-project plugin="plugin.toolbox" plugin-version="1.0">
-  <configuration build-checksum="630973939" file="C:\Users\lauta\OneDrive\Lautaro\2020\GitHub\Matlab\Indicadores-enconomicos\Indicadores-enconomicos.prj" location="C:\Users\lauta\OneDrive\Lautaro\2020\GitHub\Matlab\Indicadores-enconomicos" name="Indicadores-enconomicos" target="target.toolbox" target-name="Package Toolbox">
+  <configuration build-checksum="2616618678" file="C:\Users\lauta\OneDrive\Lautaro\2020\GitHub\Matlab\Indicadores-enconomicos\Indicadores-enconomicos.prj" location="C:\Users\lauta\OneDrive\Lautaro\2020\GitHub\Matlab\Indicadores-enconomicos" name="Indicadores-enconomicos" target="target.toolbox" target-name="Package Toolbox">
     <param.appname>Indicadores-enconomicos</param.appname>
     <param.authnamewatermark>Lautaro Parada Opazo</param.authnamewatermark>
     <param.email>lautaro.parada.opazo@gmail.com</param.email>
@@ -56,12 +56,19 @@ README.md
          &lt;file type="image"&gt;/html/Example_01.png&lt;/file&gt;
       &lt;/example&gt;
    &lt;/exampleCategory&gt;
+   &lt;exampleCategory name="html"&gt;
+      &lt;example name="Example" type="html"&gt;
+         &lt;file type="source"&gt;/html/html/Example.html&lt;/file&gt;
+         &lt;file type="main"&gt;/html/Example.mlx&lt;/file&gt;
+         &lt;file type="thumbnail"/&gt;
+      &lt;/example&gt;
+   &lt;/exampleCategory&gt;
 &lt;/examples&gt;</param.examples>
     <param.demosxml />
     <param.apps />
     <param.registered.apps />
     <param.docs />
-    <param.getting.started.guide />
+    <param.getting.started.guide>${PROJECT_ROOT}\doc\GettingStarted.mlx</param.getting.started.guide>
     <param.matlabpath.excludes />
     <param.javaclasspath.excludes />
     <param.exported.on.package>true</param.exported.on.package>
@@ -95,7 +102,6 @@ README.md
       <param.apps />
       <param.registered.apps />
       <param.docs />
-      <param.getting.started.guide />
       <param.matlabpath.excludes />
       <param.javaclasspath.excludes />
       <param.required.addons />
@@ -120,6 +126,7 @@ README.md
     </fileset.rootdir>
     <fileset.rootfiles>
       <file>${PROJECT_ROOT}\demos.xml</file>
+      <file>${PROJECT_ROOT}\doc</file>
       <file>${PROJECT_ROOT}\Example.m</file>
       <file>${PROJECT_ROOT}\html</file>
       <file>${PROJECT_ROOT}\Indicadores.m</file>

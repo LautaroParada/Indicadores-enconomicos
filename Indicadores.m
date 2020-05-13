@@ -1,10 +1,25 @@
 classdef Indicadores
+    % Este es un cliente de la API que entrega los principales indicadores 
+    % económicos para Chile en formato JSON. Tanto los indicadores diarios
+    % como los históricos pueden ser usados por desarrolladores y/ analistas
+    % en aplicaciones, analisis, etc. 
+    % La API mapea constantemente el sitio del Banco Central de Chile
+    % manteniendo así la base de datos actualizada con los últimos valores
+    % del día.
+    % 
+    % La documentación oficial de la API puede ser encontrada en el
+    % siguiente sitio web 
+    % https://mindicador.cl/
+    % 
+    % La documentación del cliente en *Matlab* puede ser encontrada en el
+    % siguiente sitio
+    % ...
     
     properties
         timeout = 60 % tiempo maximo para esperar por la respuesta
     end
     properties(Constant)
-        HOST = 'https://mindicador.cl/api' % Production server
+        HOST = 'https://mindicador.cl/api' % Servidor de produccion
     end
     
     properties(Dependent)
@@ -38,6 +53,24 @@ classdef Indicadores
         % ----------------------------------------
         
         function meta_ = metadata(~)
+            % Este método extrae los endpoints disponibles para cliente de 
+            % la API, no necesita ningún tipo de parámetros, ya que 
+            % descarga la información desde la pagina web de la API.
+            %
+            % Argumentos
+            % -------
+            % Ninguno
+            %
+            % Resultados
+            % -------
+            % String array con los endpoints/indicadores disponibles para 
+            % solicitar desde la API.
+            %
+            % Ejemplo
+            % >> Indicadores().metadata()
+            %
+            % Autor: Lautaro Parada Opazo.
+            
             url = 'https://mindicador.cl/';
             code = webread(url);
             tree = htmlTree(code);
@@ -46,6 +79,43 @@ classdef Indicadores
         end
         
         function indicador = get_data(self, params)
+            % Este método crea la solicitud a la API con respecto a los 
+            % datos del indicador referenciado. Actualmente la API es capaz
+            % de enviar datos bajo las siguientes modalidades: 
+            % - un 'snapshot' al día de hoy de todos los indicadores 
+            %   disponibles
+            % - Valores para los ultimos 30 doas para algún indicador
+            % - Solicitar datos para algún indicador especifico para alguna
+            %   fecha específica o año especifico.
+            % 
+            % Argumentos Name-value
+            % -------
+            % indicador(char): Indicador económico a solicitar. Para una 
+            %                  lista completa de los indicadores disponibles
+            %                  ocupe el método metadata o get_data().
+            % fecha(char): Fecha para solicitar datos, esta puede tener los
+            %              siguientes formatos: 
+            %                       - 'yyyy'
+            %                       - 'dd-mm-yyyy'
+            % table_format(logical): Los valores de la solicitud a la API 
+            %                        son presentados en una tabla o struct?
+            %                        *true* es el valor predeterminado. 
+            %
+            % Resultados
+            % -------
+            % Tabla o struct con los datos solicitados
+            %
+            % Ejemplos
+            % -------
+            % % Snapshot con todos los indicadores disponibles con los datos más recientes
+            % >> Indicaodres().get_data() 
+            % % valor de la UF en los últimos 30 días.
+            % >> Indicadores().get_data('indicador', 'uf') 
+            % % valores de la libra de cobre para el día 24 de Octubre de 1991
+            % >> Indicadores().get_data('indicador', 'ivp', 'fecha', '24-10-1991')
+            %
+            % Autor: Lautaro Parada Opazo
+            
             arguments
                 self
                 params.indicador(1,1) string {mustBeNonempty} = ''

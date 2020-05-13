@@ -52,7 +52,7 @@ classdef Indicadores
         % Indicadores económicos diarios
         % ----------------------------------------
         
-        function meta_ = metadata(~)
+        function meta_ = metadata(self)
             % Este método extrae los endpoints disponibles para cliente de 
             % la API, no necesita ningún tipo de parámetros, ya que 
             % descarga la información desde la pagina web de la API.
@@ -72,7 +72,8 @@ classdef Indicadores
             % Autor: Lautaro Parada Opazo.
             
             url = 'https://mindicador.cl/';
-            code = webread(url);
+            options_ = weboptions('Timeout', self.timeout);
+            code = webread(url, options_);
             tree = htmlTree(code);
             selector = 'tr';
             meta_ = extractHTMLText(findElement(tree, selector));
@@ -182,7 +183,7 @@ classdef Indicadores
                 
                 % filtrar por solo las columnas con datos 
                 res = self.selectfields(request.serie, names_, false);
-                res = cell2table(res);
+                res = flip(cell2table(res));
                 
                 % propiedades de la tabla 
                 res.Properties.VariableNames = names_;
@@ -203,7 +204,7 @@ classdef Indicadores
                 names_ = self.endpoint_vars(ind);
                                 
                 res = self.selectfields(request.serie, names_, false);
-                res = cell2table(res);
+                res = flip(cell2table(res));
                 
                 % propiedades de la tabla 
                 res.Properties.VariableNames = names_;

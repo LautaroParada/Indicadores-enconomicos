@@ -1,13 +1,20 @@
 <deployment-project plugin="plugin.toolbox" plugin-version="1.0">
-  <configuration file="C:\Users\lauta\OneDrive\Lautaro\2020\GitHub\Matlab\Indicadores-enconomicos\Indicadores-enconomicos.prj" location="C:\Users\lauta\OneDrive\Lautaro\2020\GitHub\Matlab\Indicadores-enconomicos" name="Indicadores-enconomicos" target="target.toolbox" target-name="Package Toolbox">
+  <configuration build-checksum="630973939" file="C:\Users\lauta\OneDrive\Lautaro\2020\GitHub\Matlab\Indicadores-enconomicos\Indicadores-enconomicos.prj" location="C:\Users\lauta\OneDrive\Lautaro\2020\GitHub\Matlab\Indicadores-enconomicos" name="Indicadores-enconomicos" target="target.toolbox" target-name="Package Toolbox">
     <param.appname>Indicadores-enconomicos</param.appname>
     <param.authnamewatermark>Lautaro Parada Opazo</param.authnamewatermark>
     <param.email>lautaro.parada.opazo@gmail.com</param.email>
     <param.company />
     <param.summary>Cliente Matlab para solicitar datos a la API Indicadores economicos</param.summary>
-    <param.description />
+    <param.description>Este es un cliente de la API que entrega los principales indicadores económicos para Chile en formato JSON. Tanto los indicadores 
+diarios como los históricos pueden ser usados por desarrolladores y/ analistas en aplicaciones, analisis, etc.
+
+La API mapea constantemente el sitio del Banco Central de Chile manteniendo así la base de datos actualizada con los últimos valores
+del día.
+
+La documentación oficial de la API puede ser encontrada en el siguiente sitio web https://mindicador.cl/
+La documentación del cliente en Matlab puede ser encontrada en el siguiente sitio https://la.mathworks.com/matlabcentral/fileexchange/75497-indicadores-enconomicos</param.description>
     <param.screenshot>${PROJECT_ROOT}\html\Example_01.png</param.screenshot>
-    <param.version>1.0</param.version>
+    <param.version>1.0.1</param.version>
     <param.output>${PROJECT_ROOT}\Indicadores-enconomicos.mltbx</param.output>
     <param.products.name />
     <param.products.id />
@@ -32,7 +39,12 @@
 %
 % All files matching a pattern in all subfolders of the toolbox folder:
 % **/*.bak
-%</param.exclude.filters>
+%
+% Github files
+.gitattributes
+.gitignore
+README.md
+.git</param.exclude.filters>
     <param.exclude.pcodedmfiles>true</param.exclude.pcodedmfiles>
     <param.examples>&lt;?xml version="1.0" encoding="utf-8"?&gt;
 &lt;examples&gt;
@@ -52,7 +64,7 @@
     <param.getting.started.guide />
     <param.matlabpath.excludes />
     <param.javaclasspath.excludes />
-    <param.exported.on.package>false</param.exported.on.package>
+    <param.exported.on.package>true</param.exported.on.package>
     <param.required.addons />
     <param.matlab.project.id />
     <param.matlab.project.name />
@@ -73,8 +85,6 @@
       <param.authnamewatermark />
       <param.email />
       <param.company />
-      <param.description />
-      <param.version />
       <param.output />
       <param.products.name />
       <param.products.id />
@@ -88,7 +98,6 @@
       <param.getting.started.guide />
       <param.matlabpath.excludes />
       <param.javaclasspath.excludes />
-      <param.exported.on.package />
       <param.required.addons />
       <param.matlab.project.id />
       <param.matlab.project.name />
@@ -110,15 +119,11 @@
       <file>${PROJECT_ROOT}</file>
     </fileset.rootdir>
     <fileset.rootfiles>
-      <file>${PROJECT_ROOT}\.git</file>
-      <file>${PROJECT_ROOT}\.gitattributes</file>
-      <file>${PROJECT_ROOT}\.gitignore</file>
       <file>${PROJECT_ROOT}\demos.xml</file>
       <file>${PROJECT_ROOT}\Example.m</file>
       <file>${PROJECT_ROOT}\html</file>
       <file>${PROJECT_ROOT}\Indicadores.m</file>
       <file>${PROJECT_ROOT}\LICENSE</file>
-      <file>${PROJECT_ROOT}\README.md</file>
     </fileset.rootfiles>
     <fileset.depfun.included />
     <fileset.depfun.excluded />

@@ -13,7 +13,7 @@ classdef Indicadores
     % 
     % La documentación del cliente en *Matlab* puede ser encontrada en el
     % siguiente sitio
-    % ...
+    % https://la.mathworks.com/matlabcentral/fileexchange/75497-indicadores-enconomicos
     
     properties
         timeout = 60 % tiempo maximo para esperar por la respuesta
@@ -52,7 +52,7 @@ classdef Indicadores
         % Indicadores económicos diarios
         % ----------------------------------------
         
-        function meta_ = metadata(self)
+        function meta_ = metadata(self, params)
             % Este método extrae los endpoints disponibles para cliente de 
             % la API, no necesita ningún tipo de parámetros, ya que 
             % descarga la información desde la pagina web de la API.
@@ -63,7 +63,7 @@ classdef Indicadores
             %
             % Resultados
             % -------
-            % String array con los endpoints/indicadores disponibles para 
+            % String array o tabla con los endpoints/indicadores disponibles para 
             % solicitar desde la API.
             %
             % Ejemplo
@@ -71,12 +71,31 @@ classdef Indicadores
             %
             % Autor: Lautaro Parada Opazo.
             
+            arguments
+                self
+                params.table_format(1,1) logical {mustBeNumericOrLogical} = true
+            end
+            
+            % Realizando la request a la API            
             url = 'https://mindicador.cl/';
             options_ = weboptions('Timeout', self.timeout);
             code = webread(url, options_);
             tree = htmlTree(code);
             selector = 'tr';
-            meta_ = extractHTMLText(findElement(tree, selector));
+            % extrayendo solo los tags con 'tr' como elemento diferenciador
+            meta = extractHTMLText(findElement(tree, selector));
+            
+            % devolver la solicitud como una tabla o un struct?
+            if params.table_format
+                % transformando la tabla web, en una tabla matlab
+                meta_ = arrayfun(@(s) reshape(split(s, ':'), [1 2]), meta, ...
+                    'UniformOutput', false);
+                meta_ = array2table(vertcat(meta_{:}));
+                % asignar nombres a las variables
+                meta_.Properties.VariableNames = {'Nombre', 'Rango'};
+            else
+                meta_ = meta;
+            end
         end
         
         function indicador = get_data(self, params)
@@ -211,9 +230,15 @@ classdef Indicadores
                 res.Properties.Description = descr;
                 
                 % transformando la fecha de la API a formato legible
-                res.fecha = cellfun(@(d) datetime(d(1:10), ...
-                    'InputFormat', 'yyyy-MM-dd', 'Format', 'yyyy-MM-dd'),...
-                    res.fecha);
+                if numel(res.fecha) <= 1
+                    res.fecha = datetime(request.serie.fecha(1:10), ...
+                    'InputFormat', 'yyyy-MM-dd', 'Format', 'yyyy-MM-dd');
+                    res.valor = request.serie.valor;
+                else
+                    res.fecha = cellfun(@(d) datetime(d(1:10), ...
+                        'InputFormat', 'yyyy-MM-dd', 'Format', 'yyyy-MM-dd'),...
+                        res.fecha);
+                end
             end
         end
         

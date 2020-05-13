@@ -4,7 +4,14 @@
    <type>toolbox</type>
    <icon>HelpIcon.DEMOS</icon>
    <website/>
-   <description/>
+   <description>Este es un cliente de la API que entrega los principales indicadores económicos para Chile en formato JSON. Tanto los indicadores 
+diarios como los históricos pueden ser usados por desarrolladores y/ analistas en aplicaciones, analisis, etc.
+
+La API mapea constantemente el sitio del Banco Central de Chile manteniendo así la base de datos actualizada con los últimos valores
+del día.
+
+La documentación oficial de la API puede ser encontrada en el siguiente sitio web https://mindicador.cl/
+La documentación del cliente en Matlab puede ser encontrada en el siguiente sitio https://la.mathworks.com/matlabcentral/fileexchange/75497-indicadores-enconomicos</description>
    <demosection>
       <label>Indicadores-enconomicos</label>
       <demoitem>

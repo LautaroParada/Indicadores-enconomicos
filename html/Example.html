@@ -6,7 +6,7 @@
    <!--
 This HTML was auto-generated from MATLAB code.
 To make changes, update the MATLAB code and republish this document.
-      --><title>Indicadores econ&oacute;micos diarios</title><meta name="generator" content="MATLAB 9.8"><link rel="schema.DC" href="http://purl.org/dc/elements/1.1/"><meta name="DC.date" content="2020-05-13"><meta name="DC.source" content="Example.m"><style type="text/css">
+      --><title>Example</title><meta name="generator" content="MATLAB 9.8"><link rel="schema.DC" href="http://purl.org/dc/elements/1.1/"><meta name="DC.date" content="2020-05-25"><meta name="DC.source" content="Example.m"><style type="text/css">
 html,body,div,span,applet,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,a,abbr,acronym,address,big,cite,code,del,dfn,em,font,img,ins,kbd,q,s,samp,small,strike,strong,sub,sup,tt,var,b,u,i,center,dl,dt,dd,ol,ul,li,fieldset,form,label,legend,table,caption,tbody,tfoot,thead,tr,th,td{margin:0;padding:0;border:0;outline:0;font-size:100%;vertical-align:baseline;background:transparent}body{line-height:1}ol,ul{list-style:none}blockquote,q{quotes:none}blockquote:before,blockquote:after,q:before,q:after{content:'';content:none}:focus{outine:0}ins{text-decoration:none}del{text-decoration:line-through}table{border-collapse:collapse;border-spacing:0}
 
 html { min-height:100%; margin-bottom:1px; }
@@ -67,20 +67,22 @@ table td { padding:7px 5px; text-align:left; vertical-align:top; border:1px soli
 
 
 
-  </style></head><body><div class="content"><h1>Indicadores econ&oacute;micos diarios</h1><!--introduction--><p>Este es un cliente de la API que entrega los principales indicadores econ&oacute;micos para Chile en formato Table o struct. Tanto los indicadores diarios como los hist&oacute;ricos pueden ser usados por desarrolladores y/ analistas en aplicaciones, analisis, etc.</p><p>La API mapea constantemente el sitio del Banco Central de Chile manteniendo as&iacute; la base de datos actualizada con los &uacute;ltimos valores del d&iacute;a.</p><p>La documentaci&oacute;n oficial de la API puede ser encontrada en el siguiente sitio web <a href="https://mindicador.cl/">https://mindicador.cl/</a></p><p>La documentaci&oacute;n del cliente en <b>Matlab</b> puede ser encontrada en el siguiente sitio <a href="https://la.mathworks.com/matlabcentral/fileexchange/75497-indicadores-enconomicos">https://la.mathworks.com/matlabcentral/fileexchange/75497-indicadores-enconomicos</a></p><p>Si es que el toolbox esta instalado en su version de Matlab, puede solicitar la documentacion completa del cliente ocupando el siguiente comando</p><pre class="language-matlab"><span class="comment">% Extraccion de los Indicadores disponibles a solicitar desde la API,</span>
+  </style></head><body><div class="content"><pre class="codeinput"><span class="comment">% Extraccion de los Indicadores disponibles a solicitar desde la API,</span>
 <span class="comment">% como su rango de tiempo disponible.</span>
 doc(Indicadores)
-</pre><!--/introduction--><h2>Contents</h2><div><ul><li><a href="#1">Introduccion</a></li><li><a href="#3">Inicializacion</a></li><li><a href="#4">Metodos Disponibles</a></li><li><a href="#5">Caso de uso practico</a></li></ul></div><h2 id="1">Introduccion</h2><p>Este documento va a explicar la funcionalidad que posee el cliente de la API Indicadores econ&oacute;micos, en donde se incluir&aacute; la inicializaci&oacute;n de la clase, los m&eacute;todos que posee para solicitar datos desde la API y posibles ideas de su uso futuro.</p><p>Para inicializar el objeto Indicadores, se debe invocar la clase y almacenarla en alguna variable. Tenga en cuenta que la API no solicita un llave o apikey para su uso, por ende, la clase se puede inicializar de forma vac&iacute;a o ingresando el tiempo m&aacute;ximo de espera para el cliente Matlab. A continuaci&oacute;n se muestra un caso de uso de lo anteriormente explicado.</p><h2 id="3">Inicializacion</h2><pre class="language-matlab"><span class="comment">% Inicializando la clase sin ninguna propiedad, de manera</span>
+<span class="comment">% Inicializando la clase sin ninguna propiedad, de manera</span>
 <span class="comment">% predeterminada el cliente tiene un tiempo de espera maximo de 60</span>
 <span class="comment">% segundos</span>
 rest_client = Indicadores();
-</pre><pre class="language-matlab"><span class="comment">% Alternativamente se puede definir de la siguiente manera</span>
+
+<span class="comment">% Alternativamente se puede definir de la siguiente manera</span>
 rest_client = Indicadores(45); <span class="comment">% 45 segundos de espera maxima.</span>
-</pre><pre class="language-matlab"><span class="comment">% Desplegar las propiedades de la clase</span>
+
+<span class="comment">% Desplegar las propiedades de la clase</span>
 rest_client.options
-</pre><h2 id="4">Metodos Disponibles</h2><p>Los siguientes metodos, poseen la capacidad de explotar el maximo potencial de datos que ofrece la API.</p><div><ul><li>metadata()</li></ul></div><p>Este m&eacute;todo extrae los endpoints disponibles para cliente de la API, no necesita ning&uacute;n tipo de par&aacute;metros, ya que descarga la informaci&oacute;n desde la pagina web de la API.</p><p><b>Argumentos Name-value</b></p><p>Ninguno</p><p><b>Resultados</b></p><p>String array con los endpoints/indicadores disponibles para solicitar desde la API.</p><p><b>Ejemplo(s)</b></p><pre class="language-matlab"><span class="comment">% Solicitar los indicadores disponibles para la api</span>
+<span class="comment">% Solicitar los indicadores disponibles para la api</span>
 rest_client.metadata()
-</pre><div><ul><li>get_data()</li></ul></div><p>Este m&eacute;todo crea la solicitud a la API con respecto a los datos del indicador referenciado. Actualmente la API es capaz de enviar datos bajo las siguientes modalidades:Un 'snapshot' al d&iacute;a de hoy de todos los indicadores disponibles; Valores para los ultimos 30 dias para alg&uacute;n indicador; Solicitar datos para alg&uacute;n indicador especifico, para alguna fecha espec&iacute;fica (o a&ntilde;o especifico).</p><p><b>Argumentos Name-value</b></p><p>indicador(char): Indicador econ&oacute;mico a solicitar. Para una                  lista completa de los indicadores disponibles                  ocupe el m&eacute;todo metadata o get_data().</p><p>fecha(char): Fecha para solicitar datos, esta puede tener los siguientes              formatos: 'yyyy' o 'dd-MM-yyyy'</p><p>table_format(logical): Los valores de la solicitud a la API <b>true</b> es el                        valor predeterminado.</p><p><b>Resultado(s)</b></p><p>Tabla o struct con los datos solicitados</p><p>Ejemplos*</p><pre class="language-matlab"><span class="comment">% Snapshot con todos los indicadores disponibles con los datos m&aacute;s recientes</span>
+<span class="comment">% Snapshot con todos los indicadores disponibles con los datos m&aacute;s recientes</span>
 rest_client.get_data()
 <span class="comment">% valor de la UF en los &uacute;ltimos 30 d&iacute;as.</span>
 rest_client.get_data(<span class="string">'indicador'</span>, <span class="string">'uf'</span>)
@@ -88,7 +90,7 @@ rest_client.get_data(<span class="string">'indicador'</span>, <span class="strin
 rest_client.get_data(<span class="string">'indicador'</span>, <span class="string">'ivp'</span>, <span class="string">'fecha'</span>, <span class="string">'24-10-1991'</span>)
 <span class="comment">% ver un resumen de la solicitud anterior</span>
 summary(ans)
-</pre><h2 id="5">Caso de uso practico</h2><p>A continuaci&oacute;n se presenta un caso de uso en donde expone el potencial del ciente en Matlab para la API Indicadores economicos. Dicho eso, se solicitara datos sobre el euro y el dolar a la API, para luego graficar su comportamiento contra el peso chileno durante a&ntilde;o 2019.</p><pre class="codeinput">  clear;clc;
+  clear;clc;
   <span class="comment">% Inicializando la clase</span>
   rest_client = Indicadores();
 
@@ -105,127 +107,158 @@ summary(ans)
 
   sprintf(<span class="string">'Ambos precios poseen una correlacion de %.2f'</span>, corr(euro.valor, dolar.valor))
 </pre><pre class="codeoutput">
+ans = 
+
+  weboptions with properties:
+
+      CharacterEncoding: 'auto'
+              UserAgent: 'MATLAB 9.8.0.1380330 (R2020a) Update 2'
+                Timeout: 45
+               Username: ''
+               Password: ''
+                KeyName: ''
+               KeyValue: ''
+            ContentType: 'json'
+          ContentReader: []
+              MediaType: 'application/json'
+          RequestMethod: 'get'
+            ArrayFormat: 'json'
+           HeaderFields: {2&times;2 cell}
+    CertificateFilename: 'default'
+
+
+ans =
+
+  12&times;2 table
+
+                    Nombre                                   Rango              
+    _______________________________________    _________________________________
+
+    "Unidad de fomento (UF)"                   " Valores desde 1977 hasta hoy. "
+    "Libra de Cobre"                           " Valores desde 2012 hasta hoy. "
+    "Tasa de desempleo"                        " Valores desde 2009 hasta hoy. "
+    "Euro"                                     " Valores desde 1999 hasta hoy. "
+    "Imacec"                                   " Valores desde 1997 hasta hoy. "
+    "D&oacute;lar observado"                          " Valores desde 1984 hasta hoy. "
+    "Tasa Pol&iacute;tica Monetaria (TPM)"            " Valores desde 2001 hasta hoy. "
+    "Indice de valor promedio (IVP)"           " Valores desde 1990 hasta hoy. "
+    "Indice de Precios al Consumidor (IPC)"    " Valores desde 1928 hasta hoy. "
+    "D&oacute;lar acuerdo"                            " Valores desde 1988 hasta hoy. "
+    "Unidad Tributaria Mensual (UTM)"          " Valores desde 1990 hasta hoy. "
+    "Bitcoin"                                  " Valores desde 2009 hasta hoy. "
+
+
+ans =
+
+  1&times;12 table
+
+     uf       ivp     dolar     dolar_intercambio    euro     ipc     utm     imacec    tpm    libra_cobre    tasa_desempleo    bitcoin
+    _____    _____    ______    _________________    _____    ___    _____    ______    ___    ___________    ______________    _______
+
+    28717    29859    805.75         758.87          878.2     0     50372     -3.5     0.5       2.43             8.23         9167.3 
+
+
+ans =
+
+  31&times;2 table
+
+      fecha       valor
+    __________    _____
+
+    2020-04-25    28676
+    2020-04-26    28679
+    2020-04-27    28682
+    2020-04-28    28685
+    2020-04-29    28688
+    2020-04-30    28691
+    2020-05-01    28694
+    2020-05-02    28696
+    2020-05-03    28699
+    2020-05-04    28702
+    2020-05-05    28705
+    2020-05-06    28708
+    2020-05-07    28711
+    2020-05-08    28714
+    2020-05-09    28717
+    2020-05-10    28717
+    2020-05-11    28717
+    2020-05-12    28717
+    2020-05-13    28717
+    2020-05-14    28717
+    2020-05-15    28717
+    2020-05-16    28717
+    2020-05-17    28717
+    2020-05-18    28717
+    2020-05-19    28717
+    2020-05-20    28717
+    2020-05-21    28717
+    2020-05-22    28717
+    2020-05-23    28717
+    2020-05-24    28717
+    2020-05-25    28717
+
+
+ans =
+
+  1&times;2 table
+
+      fecha       valor 
+    __________    ______
+
+    1991-10-24    7928.4
+
+
+Description:  Consulta del indicador Indice de valor promedio (IVP) con unidad de medida Pesos.
+ API version 1.6.0 autor mindicador.cl, solicitud hecha 25-May-2020 13:05:34
+
+Variables:
+
+    fecha: 1&times;1 datetime
+
+        Values:
+
+            Min       1991-10-24
+            Median    1991-10-24
+            Max       1991-10-24
+
+    valor: 1&times;1 double
+
+        Values:
+
+            Min        7928.4 
+            Median     7928.4 
+            Max        7928.4 
+
+
 ans =
 
     'Ambos precios poseen una correlacion de 0.98'
 
 </pre><img vspace="5" hspace="5" src="Example_01.png" alt=""> <p class="footer"><br><a href="https://www.mathworks.com/products/matlab/">Published with MATLAB&reg; R2020a</a><br></p></div><!--
 ##### SOURCE BEGIN #####
-%% Indicadores económicos diarios
-% Este es un cliente de la API que entrega los principales indicadores 
-% económicos para Chile en formato Table o struct. Tanto los indicadores diarios
-% como los históricos pueden ser usados por desarrolladores y/ analistas
-% en aplicaciones, analisis, etc. 
-% 
-% La API mapea constantemente el sitio del Banco Central de Chile
-% manteniendo así la base de datos actualizada con los últimos valores
-% del día.
-%   
-% La documentación oficial de la API puede ser encontrada en el
-% siguiente sitio web 
-% https://mindicador.cl/
-%   
-% La documentación del cliente en *Matlab* puede ser encontrada en el
-% siguiente sitio
-% https://la.mathworks.com/matlabcentral/fileexchange/75497-indicadores-enconomicos
-%
-% Si es que el toolbox esta instalado en su version de Matlab, puede
-% solicitar la documentacion completa del cliente ocupando el siguiente
-% comando  
-%
-%   % Extraccion de los Indicadores disponibles a solicitar desde la API,
-%   % como su rango de tiempo disponible.
-%   doc(Indicadores)
-%
-%% Introduccion
-% Este documento va a explicar la funcionalidad que posee el cliente de la 
-% API Indicadores económicos, en donde se incluirá la inicialización de la 
-% clase, los métodos que posee para solicitar datos desde la API y posibles
-% ideas de su uso futuro.
-%%
-% Para inicializar el objeto Indicadores, se debe invocar la clase y 
-% almacenarla en alguna variable. Tenga en cuenta que la API no solicita 
-% un llave o apikey para su uso, por ende, la clase se puede inicializar de 
-% forma vacía o ingresando el tiempo máximo de espera para el cliente Matlab.
-% A continuación se muestra un caso de uso de lo anteriormente explicado.
-%% Inicializacion
-%   % Inicializando la clase sin ninguna propiedad, de manera
-%   % predeterminada el cliente tiene un tiempo de espera maximo de 60
-%   % segundos
-%   rest_client = Indicadores();
-%   
-%   % Alternativamente se puede definir de la siguiente manera
-%   rest_client = Indicadores(45); % 45 segundos de espera maxima.
-%
-%   % Desplegar las propiedades de la clase
-%   rest_client.options
-%
-%% Metodos Disponibles
-% Los siguientes metodos, poseen la capacidad de explotar el maximo
-% potencial de datos que ofrece la API.
-%
-% * metadata()
-%
-% Este método extrae los endpoints disponibles para cliente de 
-% la API, no necesita ningún tipo de parámetros, ya que 
-% descarga la información desde la pagina web de la API.
-%
-% *Argumentos Name-value*
-%
-% Ninguno
-%
-% *Resultados*
-% 
-% String array con los endpoints/indicadores disponibles para solicitar 
-% desde la API.
-%
-% *Ejemplo(s)*
-%
-%   % Solicitar los indicadores disponibles para la api
-%   rest_client.metadata()
-%
-% * get_data()
-%
-% Este método crea la solicitud a la API con respecto a los 
-% datos del indicador referenciado. Actualmente la API es capaz
-% de enviar datos bajo las siguientes modalidades:Un 'snapshot' al día de 
-% hoy de todos los indicadores disponibles; Valores para los ultimos 30 
-% dias para algún indicador; Solicitar datos para algún indicador 
-% especifico, para alguna fecha específica (o año especifico).
-%
-% *Argumentos Name-value*
-%
-% indicador(char): Indicador económico a solicitar. Para una 
-%                  lista completa de los indicadores disponibles
-%                  ocupe el método metadata o get_data().
-% 
-% fecha(char): Fecha para solicitar datos, esta puede tener los siguientes
-%              formatos: 'yyyy' o 'dd-MM-yyyy'
-%
-% table_format(logical): Los valores de la solicitud a la API *true* es el
-%                        valor predeterminado. 
-%  
-% *Resultado(s)*
-%
-% Tabla o struct con los datos solicitados
-%  
-% Ejemplos*
-%
-%   % Snapshot con todos los indicadores disponibles con los datos más recientes
-%   rest_client.get_data() 
-%   % valor de la UF en los últimos 30 días.
-%   rest_client.get_data('indicador', 'uf') 
-%   % valores del Indice de valor promedio para el día 24 de Octubre de 1991
-%   rest_client.get_data('indicador', 'ivp', 'fecha', '24-10-1991')
-%   % ver un resumen de la solicitud anterior
-%   summary(ans)
-%
-%% Caso de uso practico
-% A continuación se presenta un caso de uso en donde expone el potencial 
-% del ciente en Matlab para la API Indicadores economicos. Dicho eso, se 
-% solicitara datos sobre el euro y el dolar a la API, para luego graficar
-% su comportamiento contra el peso chileno durante año 2019.
-%
+% Extraccion de los Indicadores disponibles a solicitar desde la API,
+% como su rango de tiempo disponible.
+doc(Indicadores)
+% Inicializando la clase sin ninguna propiedad, de manera
+% predeterminada el cliente tiene un tiempo de espera maximo de 60
+% segundos
+rest_client = Indicadores();
+
+% Alternativamente se puede definir de la siguiente manera
+rest_client = Indicadores(45); % 45 segundos de espera maxima.
+
+% Desplegar las propiedades de la clase
+rest_client.options
+% Solicitar los indicadores disponibles para la api
+rest_client.metadata()
+% Snapshot con todos los indicadores disponibles con los datos más recientes
+rest_client.get_data() 
+% valor de la UF en los últimos 30 días.
+rest_client.get_data('indicador', 'uf') 
+% valores del Indice de valor promedio para el día 24 de Octubre de 1991
+rest_client.get_data('indicador', 'ivp', 'fecha', '24-10-1991')
+% ver un resumen de la solicitud anterior
+summary(ans)
   clear;clc;
   % Inicializando la clase
   rest_client = Indicadores();
@@ -242,6 +275,5 @@ ans =
   title('Valor del Euro y del Dolar en pesos Chilenos')
 
   sprintf('Ambos precios poseen una correlacion de %.2f', corr(euro.valor, dolar.valor))
-
 ##### SOURCE END #####
 --></body></html>
